@@ -1,0 +1,9 @@
+setup.py
+gonbasicmath/__init__.py
+gonbasicmath/basic.py
+gonbasicmath.egg-info/PKG-INFO
+gonbasicmath.egg-info/SOURCES.txt
+gonbasicmath.egg-info/dependency_links.txt
+gonbasicmath.egg-info/top_level.txt
+gonbasicmath/adv/__init__.py
+gonbasicmath/adv/sqrt.py
