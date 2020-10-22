@@ -1,0 +1,104 @@
+
+# SEE :  https://pysimplegui.readthedocs.io/en/latest/cookbook/#recipe-long-operations-multi-threading
+
+
+
+
+
+#################### BRUTE FORCE
+
+
+import PySimpleGUI as sg
+import time
+
+def long_function():
+    time.sleep(10)
+
+layout = [[sg.Output(size=(60,10))],
+          [sg.Button('Go'), sg.Button('Nothing'), sg.Button('Exit')]  ]
+
+window = sg.Window('Window Title', layout)
+
+while True:             # Event Loop
+    event, values = window.read()
+    if event == sg.WIN_CLOSED or event == 'Exit':
+        break
+    if event == 'Go':
+        print('About to go to call my long function')
+        long_function()
+        print('Your long operation completed')
+window.close()
+
+
+
+
+#################### THREADED LONG OPERATIONS
+
+import PySimpleGUI as sg
+import time
+import threading
+
+
+def long_function_thread(window):
+    time.sleep(10)
+    window.write_event_value('-THREAD DONE-', '')
+
+def long_function():
+    threading.Thread(target=long_function_thread, args=(window,), daemon=True).start()
+
+
+layout = [[sg.Output(size=(60,10))],
+          [sg.Button('Go'), sg.Button('Nothing'), sg.Button('Exit')]  ]
+
+window = sg.Window('Window Title', layout)
+
+while True:             # Event Loop
+    event, values = window.read()
+    if event == sg.WIN_CLOSED or event == 'Exit':
+        break
+    if event == 'Go':
+        print('About to go to call my long function')
+        long_function()
+        print('Long function has returned from starting')
+    elif event == '-THREAD DONE-':
+        print('Your long operation completed')
+    else:
+        print(event, values)
+window.close()
+
+
+#################### LONG OPERATIONS WITH FEEDBACK
+
+import PySimpleGUI as sg
+import time
+import threading
+
+def long_function_thread(window):
+    for i in range(10):
+        time.sleep(1)
+        window.write_event_value('-THREAD PROGRESS-', i)
+    window.write_event_value('-THREAD DONE-', '')
+
+def long_function():
+    threading.Thread(target=long_function_thread, args=(window,), daemon=True).start()
+
+
+layout = [[sg.Output(size=(60,10))],
+          [sg.Button('Go'), sg.Button('Nothing'), sg.Button('Exit')]  ]
+
+window = sg.Window('Window Title', layout)
+
+while True:             # Event Loop
+    event, values = window.read()
+    if event == sg.WIN_CLOSED or event == 'Exit':
+        break
+    if event == 'Go':
+        print('About to go to call my long function')
+        long_function()
+        print('Long function has returned from starting')
+    elif event == '-THREAD DONE-':
+        print('Your long operation completed')
+    else:
+        print(event, values)
+window.close()
+
