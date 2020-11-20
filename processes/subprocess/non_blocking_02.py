@@ -53,8 +53,7 @@ while True:
             break
 
 
-return
-t.join()
+# t.join()
         # ... do something with line
 
 ############# OUT
