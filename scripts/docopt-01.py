@@ -1,24 +1,43 @@
-"""Naval Fate.
-
+"""
 Usage:
-  naval_fate.py ship new <name>...
-  naval_fate.py ship <name> move <x> <y> [--speed=<kn>]
-  naval_fate.py ship shoot <x> <y>
-  naval_fate.py mine (set|remove) <x> <y> [--moored | --drifting]
-  naval_fate.py (-h | --help)
-  naval_fate.py --version
+  foo bar [--baz] [--num-jobs=<jobs>]
+  foo read <input_file> [--verbose]
 
 Options:
-  -h --help     Show this screen.
-  --version     Show version.
-  --speed=<kn>  Speed in knots [default: 10].
-  --moored      Moored (anchored) mine.
-  --drifting    Drifting mine.
+  --baz              Do some baz stuff
+  --verbose          Be verbose
+  --num-jobs=<jobs>  number of jobs [default: 1]
 
 """
-from docopt import docopt
+
+import docopt
+
+opts = docopt.docopt(__doc__)
+print(opts)
 
 
-if __name__ == '__main__':
-    arguments = docopt(__doc__, version='Naval Fate 2.0')
-    print(arguments)
+"""
+└──> python docopt-01.py bar --num-jobs=42
+{'--baz': False,
+ '--num-jobs': '42',
+ '--verbose': False,
+ '<input_file>': None,
+ 'bar': True,
+ 'read': False}
+
+%python doctop-01.py read input.txt
+{'--baz': False,
+ '--num-jobs': '1',
+ '--verbose': False,
+ '<input_file>': 'input.txt',
+ 'bar': False,
+ 'read': True}
+ """
+
+ """------------------- Other things you can do:
+REF: https://dmerej.info/blog/post/docopt-v-argparse/
+
+# Exclusive conditions
+
+Usage: my_program (--either-this <and-that> | <or-this>)
+"""

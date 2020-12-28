@@ -15,6 +15,7 @@ print(table)
 print(table["asd"].x)
 
 ##########
+print("----------------------")
 
 File_Mapping = namedtuple('File_Mapping', ['unencrypted_file', 'json_report'])
 
@@ -38,10 +39,40 @@ file_correspondence_registry(table, "PD/name.ext", json_report_path="OUT/name.ex
 print(table)
 print(table[path].json_report)
 
+##############################
+print("----------------------")
 
-# └──> python yy.py
-# {'asd': Point(x=11, y=22)}
-# 11
-# {'PD/name.ext': File_Mapping(unencrypted_file='IN/name.ext', json_report='OUT/name.ext')}
-# OUT/name.ext
+def foo2(table):
+    Point2 = namedtuple('Point', ['x', 'y'])
+    p = Point2(111, y=222)
+    table["asd"] = p
+
+table = {}
+foo2(table)
+print(table)
+print(table["asd"].x)
+
+
+##############################
+print("----------------------")
+
+def foo3():
+    Point3 = namedtuple('Point', ['x', 'y'])
+    p = Point3(111, y=222)
+    return[p]
+
+for point in foo3():
+    print(point.x, point.y)
+
+
+#{'asd': Point(x=11, y=22)}
+#11
+#----------------------
+#{'PD/name.ext': File_Mapping(unencrypted_file='IN/name.ext', json_report='OUT/name.ext')}
+#OUT/name.ext
+#----------------------
+#{'asd': Point(x=111, y=222)}
+#111
+#----------------------
+#(111, 222)
 
